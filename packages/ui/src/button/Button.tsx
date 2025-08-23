@@ -1,9 +1,23 @@
-import React from "react";
+import React from 'react';
+import styles from './Button.module.css';
 
-type ButtonProps = {
+export const Button = ({
+  children,
+  variant = 'primary',
+  disabled = false,
+  ...props
+}: ButtonProps) => {
+  const classNames = [styles.button, styles[variant]].filter(Boolean).join(' ');
+
+  return (
+    <button className={classNames} disabled={disabled} {...props}>
+      {children}
+    </button>
+  );
+};
+
+export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
-};
-
-export const Button = ({ children }: ButtonProps) => {
-  return <button style={{ padding: "8px 16px", backgroundColor: "red" }}>{children}</button>;
-};
+  variant?: 'primary' | 'secondary';
+  disabled?: boolean;
+}

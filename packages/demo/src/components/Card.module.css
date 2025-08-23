@@ -1,0 +1,25 @@
+.card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin: 20px;
+  max-width: 400px;
+}
+
+.title {
+  color: #333;
+  font-size: 1.5rem;
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
+.content {
+  color: #666;
+  line-height: 1.6;
+}
+
+.highlighted {
+  background-color: #f0f8ff;
+  border-left: 4px solid #007bff;
+}
