@@ -1,27 +1,13 @@
 import React from 'react';
 
-export interface VisuallyHiddenProps extends React.HTMLAttributes<HTMLElement> {
-  children: React.ReactNode;
-  as?: keyof JSX.IntrinsicElements;
-}
-
-/**
- * VisuallyHidden component hides content visually while keeping it accessible to screen readers.
- *
- * This component uses the "screen reader only" technique that:
- * - Positions content off-screen (not display: none or visibility: hidden)
- * - Maintains accessibility for assistive technologies
- * - Follows WCAG guidelines for accessible hiding
- *
- * @param children - Content to be visually hidden but accessible
- * @param as - HTML element to render (default: 'span')
- */
-export const VisuallyHidden: React.FC<VisuallyHiddenProps> = ({
+export const VisuallyHidden = <T extends React.ElementType = 'span'>({
   children,
-  as: Component = 'span',
+  as,
   style,
   ...props
-}) => {
+}: VisuallyHiddenProps<T>) => {
+  const Component = as || 'span';
+
   const visuallyHiddenStyle: React.CSSProperties = {
     position: 'absolute',
     left: '-10000px',
@@ -40,3 +26,11 @@ export const VisuallyHidden: React.FC<VisuallyHiddenProps> = ({
     </Component>
   );
 };
+
+type VisuallyHiddenOwnProps = {
+  children: React.ReactNode;
+};
+
+export type VisuallyHiddenProps<T extends React.ElementType = 'span'> = VisuallyHiddenOwnProps & {
+  as?: T;
+} & React.ComponentPropsWithoutRef<T>;
