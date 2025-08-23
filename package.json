@@ -1,0 +1,11 @@
+{
+  "name": "lorem-monorepo",
+  "private": true,
+  "version": "1.0.0",
+  "packageManager": "pnpm@10.15.0",
+  "scripts": {
+    "dev:ui": "pnpm --filter ui dev",
+    "dev:demo": "pnpm --filter demo dev",
+      "dev:all": "pnpm run dev:ui & pnpm run dev:demo"
+  }
+}

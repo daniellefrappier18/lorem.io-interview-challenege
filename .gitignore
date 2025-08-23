@@ -1,0 +1,49 @@
+# Node modules
+node_modules/
+**/node_modules/
+
+# PNPM store (optional)
+.pnpm-store/
+
+# Lockfile (usually keep pnpm-lock.yaml)
+# pnpm-lock.yaml
+
+# Build outputs
+dist/
+**/dist/
+build/
+**/build/
+.storybook-out/
+
+# Vite cache
+.vite/
+**/.vite/
+
+# Storybook cache
+.storybook/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# TypeScript
+*.tsbuildinfo
+
+# IDE / Editor files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Optional: coverage reports
+coverage/
+**/coverage/
