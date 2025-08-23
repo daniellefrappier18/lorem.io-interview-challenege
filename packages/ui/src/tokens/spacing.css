@@ -4,14 +4,14 @@
   --ui-space-px: 1px;
   --ui-space-xs: 2px;
   --ui-space-sm: 4px;
-  --ui-space-md: 8px;
+  --ui-space-md: 10px;
   --ui-space-lg: 12px;
   --ui-space-xl: 16px;
-  --ui-space-2xl: 24px;
-  --ui-space-3xl: 32px;
-  --ui-space-4xl: 48px;
-  --ui-space-5xl: 64px;
-  --ui-space-6xl: 96px;
+  --ui-space-2xl: 20px;
+  --ui-space-3xl: 24px;
+  --ui-space-4xl: 32px;
+  --ui-space-5xl: 48px;
+  --ui-space-6xl: 64px;
 
   /* Border Radius */
   --ui-radius-none: 0;

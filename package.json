@@ -18,6 +18,9 @@
     "format:all": "pnpm -r format"
   },
   "devDependencies": {
+    "@storybook/addon-interactions": "^8.6.14",
+    "@storybook/jest": "^0.2.3",
+    "@storybook/testing-library": "^0.2.2",
     "@typescript-eslint/eslint-plugin": "^8.40.0",
     "@typescript-eslint/parser": "^8.40.0",
     "eslint": "^9.34.0",

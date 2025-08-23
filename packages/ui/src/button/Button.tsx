@@ -5,12 +5,13 @@ export const Button = ({
   children,
   variant = 'primary',
   disabled = false,
+  onClick,
   ...props
 }: ButtonProps) => {
   const classNames = [styles.button, styles[variant]].filter(Boolean).join(' ');
 
   return (
-    <button className={classNames} disabled={disabled} {...props}>
+    <button className={classNames} disabled={disabled} onClick={onClick} {...props}>
       {children}
     </button>
   );
@@ -20,4 +21,5 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   children: React.ReactNode;
   variant?: 'primary' | 'secondary';
   disabled?: boolean;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }

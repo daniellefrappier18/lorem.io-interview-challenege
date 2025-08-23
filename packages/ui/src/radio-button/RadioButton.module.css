@@ -1,0 +1,120 @@
+.radioButton {
+  display: flex;
+  align-items: center;
+  gap: var(--ui-space-sm);
+  cursor: pointer;
+  font-family: var(--ui-font-family-primary);
+  color: var(--ui-color-text-primary);
+}
+
+.radioButton:has(.input:disabled) {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  margin: 0;
+}
+
+.customRadio {
+  width: 28px;
+  height: 28px;
+  border: 2px solid var(--ui-color-gray-300);
+  border-radius: 50%;
+  background-color: var(--ui-color-white);
+  transition: all 0.2s ease-in-out;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.input:checked + .customRadio {
+  border-color: var(--ui-color-primary-100);
+  background-color: var(--ui-color-primary-500);
+}
+
+.input:checked + .customRadio::after {
+  content: '';
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: var(--ui-color-white);
+}
+
+.input:focus + .customRadio {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--ui-color-primary-100);
+}
+
+.input:not(:checked):hover:not(:disabled) + .customRadio {
+  background-color: var(--ui-color-gray-100);
+  border-color: var(--ui-color-gray-600);
+}
+
+.input:disabled + .customRadio {
+  border-color: var(--ui-color-gray-200);
+  background-color: var(--ui-color-gray-100);
+}
+
+.input:disabled:checked + .customRadio::after {
+  background-color: var(--ui-color-gray-400);
+}
+
+.label {
+  color: var(--ui-color-text-primary);
+  font-weight: var(--ui-font-weight-semibold);
+  user-select: none;
+}
+
+.label-md {
+  font-size: var(--ui-font-size-md);
+  line-height: var(--ui-line-height-spacious);
+}
+
+.label-sm {
+  font-size: var(--ui-font-size-sm);
+  line-height: var(--ui-line-height-very-spacious);
+}
+
+.label-xs {
+  font-size: var(--ui-font-size-xs);
+  line-height: var(--ui-line-height-very-spacious);
+}
+
+/* Card variant styles */
+.cardVariant {
+  padding: var(--ui-space-md);
+  border: 1px solid var(--ui-color-gray-250);
+  border-radius: var(--ui-radius-lg);
+  background-color: var(--ui-color-white);
+  transition: all 0.2s ease-in-out;
+  min-width: 256px;
+  padding: var(--ui-space-xl --ui-space-2xl);
+}
+
+.cardVariant:hover {
+  border-color: var(--ui-color-gray-300);
+  background-color: var(--ui-color-gray-100);
+}
+
+.cardVariant:has(.input:checked) {
+  border-color: var(--ui-color-primary-500);
+  background-color: var(--ui-color-primary-50);
+  box-shadow: 0 0 0 3px var(--ui-color-primary-100);
+}
+
+.cardVariant:has(.input:disabled) {
+  cursor: not-allowed;
+  opacity: 0.6;
+  background-color: var(--ui-color-background-disabled);
+}
+
+.cardVariant .label {
+  margin-left: var(--ui-space-xl);
+}
