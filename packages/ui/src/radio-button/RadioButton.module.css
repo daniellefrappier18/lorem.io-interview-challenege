@@ -12,6 +12,10 @@
   opacity: 0.6;
 }
 
+.radioButton:has(.input:disabled) .label {
+  color: var(--ui-color-gray-400);
+}
+
 .input {
   position: absolute;
   opacity: 0;
@@ -111,8 +115,7 @@
 
 .cardVariant:has(.input:disabled) {
   cursor: not-allowed;
-  opacity: 0.6;
-  background-color: var(--ui-color-background-disabled);
+  background-color: var(--ui-color-gray-150);
 }
 
 .cardVariant .label {

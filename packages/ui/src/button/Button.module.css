@@ -21,7 +21,7 @@
 }
 
 .button:focus {
-  outline: none;
+  outline: none; /* I removed the outline to allow for consistency of the focus styles between the other components but generally this isn't recommended  */
   box-shadow: 0 0 0 3px var(--ui-color-primary-100);
 }
 

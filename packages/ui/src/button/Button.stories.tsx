@@ -16,26 +16,31 @@ The Button component is a fundamental UI element used for user interactions. It 
 
 ## Design Specifications
 - **Height**: Flexible based on content
-- **Padding**: 10px vertical, 16px horizontal  
-- **Border Radius**: 100px (fully rounded)
-- **Gap**: 6px between child elements
-- **Line Height**: Spacious (170%)
-- **Font**: Hanken Grotesk, medium weight (600)
-- **Font Size**: 15px
-
+- **Padding**: Uses design token \`--ui-space-md\`
+- **Border Radius**: Uses design token \`--ui-radius-full\` (fully rounded)
+- **Gap**: Automatically handled by inline-flex alignment
+- **Line Height**: Uses design token \`--ui-line-height-spacious\`
+- **Font**: Uses design token \`--ui-font-family-primary\` (Hanken Grotesk)
+- **Font Size**: Uses design token \`--ui-font-size-md\`
+- **Font Weight**: Uses design token \`--ui-font-weight-semibold\`
 - **Minimum Width**: 78px
 - **Maximum Width**: 300px
+- **Transition**: All properties transition with 0.2s ease
+- **Transform**: Hover state includes \`translateY(-1px)\` for subtle lift effect
 
 ## Interactive States
 
 ### Primary Button
-- **Default**: Primary 600 background
-- **Hover/Active**: Primary 700 background
+- **Default**: \`--ui-color-primary-600\` background, white text
+- **Hover/Active**: \`--ui-color-primary-700\` background with transform lift
+- **Focus**: Blue focus ring using \`--ui-color-primary-100\`
+- **Disabled**: \`--ui-color-gray-150\` background, \`--ui-color-gray-400\` text
 
 ### Secondary Button  
-- **Default**: Transparent background with primary 600 border
-- **Hover**: Gray 100 background
-- **Active**: Gray 150 background
+- **Default**: Transparent background with \`--ui-color-gray-300\` border
+- **Hover**: \`--ui-color-gray-100\` background with transform lift
+- **Active**: \`--ui-color-gray-150\` background
+- **Focus**: Blue focus ring using \`--ui-color-primary-100\`
 
 ## Usage
 
@@ -49,9 +54,10 @@ import { Button } from 'ui';
 
 ## Accessibility
 - Buttons are keyboard accessible via Tab and Enter/Space keys
-- Focus states provide clear visual feedback
-- Disabled buttons cannot be interacted with and have reduced opacity
+- Focus states provide clear visual feedback with 3px focus ring
+- Disabled buttons cannot be interacted with and have appropriate color contrast
 - Color contrast meets WCAG guidelines
+- Focus outline removed in favor of custom focus ring for consistency
         `,
       },
     },

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useId } from 'react';
 import styles from './RadioButton.module.css';
 
 export const RadioButton = ({
@@ -12,14 +12,16 @@ export const RadioButton = ({
   onChange,
   ...props
 }: RadioButtonProps) => {
+  const inputId = useId();
   const labelClassNames = [styles.label, styles['label-' + labelSize]].filter(Boolean).join(' ');
   const containerClassNames = [styles.radioButton, variant === 'card' ? styles.cardVariant : null]
     .filter(Boolean)
     .join(' ');
 
   return (
-    <label className={containerClassNames}>
+    <label className={containerClassNames} htmlFor={inputId}>
       <input
+        id={inputId}
         type="radio"
         name={name}
         value={value}
@@ -29,8 +31,12 @@ export const RadioButton = ({
         className={styles.input}
         {...props}
       />
-      <span className={styles.customRadio} />
-      {label && <span className={labelClassNames}>{label}</span>}
+      <span className={styles.customRadio} aria-hidden="true" />
+      {label && (
+        <span className={labelClassNames} id={`${inputId}-label`}>
+          {label}
+        </span>
+      )}
     </label>
   );
 };
