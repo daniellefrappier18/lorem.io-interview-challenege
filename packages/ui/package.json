@@ -6,7 +6,10 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "dev": "storybook dev -p 6006",
-    "build": "tsc --declaration --outDir dist"
+    "build": "tsc --declaration --outDir dist",
+    "lint": "pnpm --filter . exec eslint 'src/**/*.{ts,tsx,js,jsx}'",
+    "lint:fix": "pnpm --filter . exec eslint 'src/**/*.{ts,tsx,js,jsx}' --fix",
+    "format": "pnpm --filter . exec prettier --write 'src/**/*.{ts,tsx,js,jsx,json,css,md}'"
   },
   "peerDependencies": {
     "react": "^18.2.0",
