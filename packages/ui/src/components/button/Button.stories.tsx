@@ -114,6 +114,24 @@ export const Disabled: Story = {
   },
 };
 
+export const FullWidth: Story = {
+  args: {
+    variant: 'primary',
+    isFullWidth: true,
+    children: 'Full Width Button',
+    onClick: () => {
+      console.log('Full width button clicked!');
+    },
+  },
+  decorators: [
+    (Story) => (
+      <div style={{ width: '400px', padding: '20px', border: '1px dashed #ccc' }}>
+        <Story />
+      </div>
+    ),
+  ],
+};
+
 export const KeyboardInteraction: Story = {
   args: {
     variant: 'secondary',

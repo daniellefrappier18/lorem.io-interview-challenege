@@ -155,20 +155,22 @@ export default function App() {
                   </Grid>
                 </fieldset>
                 <Grid>
-                  <Button
-                    type="submit"
-                    variant="primary"
-                    isFullWidth
-                    disabled={isSubmitting}
-                    aria-describedby="submit-help"
-                  >
-                    {isSubmitting ? 'Submitting...' : 'Contact sales'}
-                  </Button>
-                  <VisuallyHidden id="submit-help">
-                    {isSubmitting
-                      ? 'Form is being submitted, please wai'
-                      : 'Submit the contact form to reach our sales team'}
-                  </VisuallyHidden>
+                  <>
+                    <Button
+                      type="submit"
+                      variant="primary"
+                      isFullWidth
+                      disabled={isSubmitting}
+                      aria-describedby="submit-help"
+                    >
+                      {isSubmitting ? 'Submitting...' : 'Contact sales'}
+                    </Button>
+                    <VisuallyHidden id="submit-help">
+                      {isSubmitting
+                        ? 'Form is being submitted, please wai'
+                        : 'Submit the contact form to reach our sales team'}
+                    </VisuallyHidden>
+                  </>
                 </Grid>
               </form>
             </Card>
