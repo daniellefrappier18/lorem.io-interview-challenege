@@ -61,3 +61,9 @@
 .secondary:active:not(:disabled) {
   background-color: var(--ui-color-gray-150);
 }
+
+.fullWidth {
+  width: 100%;
+  max-width: 100%;
+  display: block;
+}

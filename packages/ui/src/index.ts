@@ -8,6 +8,9 @@ export type { ButtonProps } from './components/button/Button';
 export { RadioButton } from './components/radio-button/RadioButton';
 export type { RadioButtonProps } from './components/radio-button/RadioButton';
 
+export { Input } from './components/input/Input';
+export type { InputProps } from './components/input/Input';
+
 export { Label } from './components/label/Label';
 export type { LabelProps } from './components/label/Label';
 

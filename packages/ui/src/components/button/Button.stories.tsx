@@ -66,6 +66,10 @@ import { Button } from 'ui';
       control: { type: 'select' },
       options: ['primary', 'secondary'],
     },
+    isFullWidth: {
+      control: { type: 'boolean' },
+      description: 'If true, the button will take the full width of its container',
+    },
     disabled: {
       control: { type: 'boolean' },
     },

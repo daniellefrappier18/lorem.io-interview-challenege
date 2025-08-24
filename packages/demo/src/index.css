@@ -29,4 +29,6 @@ body {
   min-width: 320px;
   min-height: 100vh;
   background-color: var(--ui-color-gray-50);
+  color: var(--ui-color-gray-900);
+  font-weight: var(--ui-font-weight-medium);
 }
