@@ -1,0 +1,33 @@
+/* Label base styles */
+.label {
+  color: var(--ui-color-text-primary);
+  font-weight: var(--ui-font-weight-semibold);
+  user-select: none;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.label:hover {
+  color: var(--ui-color-text-primary);
+}
+
+.label.disabled {
+  color: var(--ui-color-text-disabled);
+  cursor: not-allowed;
+}
+
+/* Size variants */
+.label-md {
+  font-size: var(--ui-font-size-md);
+  line-height: var(--ui-line-height-spacious);
+}
+
+.label-sm {
+  font-size: var(--ui-font-size-sm);
+  line-height: var(--ui-line-height-very-spacious);
+}
+
+.label-xs {
+  font-size: var(--ui-font-size-xs);
+  line-height: var(--ui-line-height-very-spacious);
+}

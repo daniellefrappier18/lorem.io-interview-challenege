@@ -2,14 +2,17 @@
 import './index.css';
 
 // Export components
-export { Button } from './button/Button';
-export type { ButtonProps } from './button/Button';
+export { Button } from './components/button/Button';
+export type { ButtonProps } from './components/button/Button';
 
-export { RadioButton } from './radio-button/RadioButton';
-export type { RadioButtonProps } from './radio-button/RadioButton';
+export { RadioButton } from './components/radio-button/RadioButton';
+export type { RadioButtonProps } from './components/radio-button/RadioButton';
 
-export { VisuallyHidden } from './visually-hidden/VisuallyHidden';
-export type { VisuallyHiddenProps } from './visually-hidden/VisuallyHidden';
+export { Label } from './components/label/Label';
+export type { LabelProps } from './components/label/Label';
+
+export { VisuallyHidden } from './components/visually-hidden/VisuallyHidden';
+export type { VisuallyHiddenProps } from './components/visually-hidden/VisuallyHidden';
 
 // Export design tokens
 export { tokens } from './tokens';

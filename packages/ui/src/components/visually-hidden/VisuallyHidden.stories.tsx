@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { VisuallyHidden } from './VisuallyHidden';
+import { Input } from '../input/Input';
 
 const meta: Meta<typeof VisuallyHidden> = {
   title: 'Utilities/VisuallyHidden',
@@ -14,7 +15,6 @@ The VisuallyHidden component hides content from visual users while keeping it ac
 ## When to Use
 - Form labels that would clutter the visual design
 - Additional context for screen reader users
-- Skip links for keyboard navigation
 - Descriptive text for icon-only buttons or controls
 
 ## Best Practices
@@ -41,11 +41,6 @@ Uses the "screen reader only" CSS technique that:
   },
   tags: ['autodocs'],
   argTypes: {
-    as: {
-      control: 'select',
-      options: ['span', 'div', 'p', 'label', 'h1', 'h2', 'h3'],
-      description: 'HTML element to render',
-    },
     children: {
       control: 'text',
       description: 'Content to be visually hidden',
@@ -86,20 +81,10 @@ export const WithLabel: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
       <div>
-        <VisuallyHidden as="label" htmlFor="search">
-          Search for products in our catalog
-        </VisuallyHidden>
-        <input
-          id="search"
-          type="text"
-          placeholder="🔍 Search..."
-          style={{
-            padding: '8px 12px',
-            border: '1px solid #ccc',
-            borderRadius: '4px',
-            width: '200px',
-          }}
-        />
+        <label htmlFor="search" style={{ position: 'absolute', left: '-10000px' }}>
+          <VisuallyHidden>Search for products in our catalog</VisuallyHidden>
+        </label>
+        <Input id="search" type="text" placeholder="🔍 Search..." />
       </div>
       <div
         style={{
@@ -110,34 +95,6 @@ export const WithLabel: Story = {
       >
         The input has a visually hidden label for screen readers while showing a placeholder to
         sighted users.
-      </div>
-    </div>
-  ),
-};
-
-export const SkipLink: Story = {
-  name: 'Skip Link Example',
-  render: () => (
-    <div>
-      <VisuallyHidden as="a" href="#main-content">
-        Skip to main content
-      </VisuallyHidden>
-      <nav style={{ padding: '16px', backgroundColor: '#f0f0f0', marginBottom: '16px' }}>
-        <div>Navigation menu would be here</div>
-      </nav>
-      <main id="main-content" style={{ padding: '16px' }}>
-        <h1>Main Content</h1>
-        <p>The skip link above allows keyboard users to jump directly here.</p>
-      </main>
-      <div
-        style={{
-          marginTop: '16px',
-          fontSize: '14px',
-          color: '#666',
-          fontStyle: 'italic',
-        }}
-      >
-        💡 Try tabbing to see the skip link become visible when focused.
       </div>
     </div>
   ),

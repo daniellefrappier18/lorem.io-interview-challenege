@@ -17,9 +17,8 @@ The Button component is a fundamental UI element used for user interactions. It 
 ## Design Specifications
 - **Height**: Flexible based on content
 - **Padding**: Uses design token \`--ui-space-md\`
-- **Border Radius**: Uses design token \`--ui-radius-full\` (fully rounded)
-- **Gap**: Automatically handled by inline-flex alignment
-- **Line Height**: Uses design token \`--ui-line-height-spacious\`
+- **Border Radius**: Uses design token \`--ui-radius-full\` 
+- **Line Height**: Uses design token \`--ui-line-height-spacious\` (170%)
 - **Font**: Uses design token \`--ui-font-family-primary\` (Hanken Grotesk)
 - **Font Size**: Uses design token \`--ui-font-size-md\`
 - **Font Weight**: Uses design token \`--ui-font-weight-semibold\`

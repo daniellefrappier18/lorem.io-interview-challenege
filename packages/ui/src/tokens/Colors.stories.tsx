@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 import '../tokens/colors.css';
 
-// Color display component
 const ColorSwatch = ({
   name,
   value,
@@ -25,8 +24,12 @@ const ColorSwatch = ({
     />
     <div>
       <div style={{ fontWeight: '600', marginBottom: '2px' }}>{name}</div>
-      <div style={{ fontFamily: 'monospace', fontSize: '12px', color: '#6b7280' }}>{variable}</div>
-      <div style={{ fontFamily: 'monospace', fontSize: '12px', color: '#9ca3af' }}>{value}</div>
+      <div style={{ fontFamily: 'monospace', fontSize: '12px', color: 'var(--ui-color-gray-800)' }}>
+        {variable}
+      </div>
+      <div style={{ fontFamily: 'monospace', fontSize: '12px', color: 'var(--ui-color-gray-700)' }}>
+        {value}
+      </div>
     </div>
   </div>
 );
@@ -39,7 +42,7 @@ const ColorSection = ({
   colors: Array<{ name: string; value: string; variable: string }>;
 }) => (
   <div style={{ marginBottom: '32px' }}>
-    <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600' }}>{title}</h3>
+    <h2 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600' }}>{title}</h2>
     <div
       style={{
         display: 'grid',
@@ -130,7 +133,7 @@ const Colors = () => {
 };
 
 const meta: Meta<typeof Colors> = {
-  title: 'Design System/Colors',
+  title: 'Tokens/Colors',
   component: Colors,
   parameters: {
     layout: 'fullscreen',

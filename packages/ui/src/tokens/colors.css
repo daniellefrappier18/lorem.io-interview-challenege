@@ -32,12 +32,4 @@
   /* Black & White */
   --ui-color-black: #000000;
   --ui-color-white: #ffffff;
-
-  /* Component Tokens */
-  --ui-color-text-primary: var(--ui-color-gray-900);
-  --ui-color-text-secondary: var(--ui-color-gray-700);
-  --ui-color-text-muted: var(--ui-color-gray-500);
-  --ui-color-background: var(--ui-color-background-base);
-  --ui-color-surface: var(--ui-color-gray-50);
-  --ui-color-border: var(--ui-color-gray-200);
 }

@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { RadioButton } from './RadioButton';
+import React, { useState } from 'react';
+import { RadioButton } from '../radio-button/RadioButton';
 import { VisuallyHidden } from '../visually-hidden/VisuallyHidden';
 
 const meta: Meta<typeof RadioButton> = {
@@ -11,6 +12,172 @@ const meta: Meta<typeof RadioButton> = {
       description: {
         component: `
 A customizable radio button component with label sizing and variant options. Supports both default and card-style variants for different UI contexts.
+
+## Usage Patterns
+
+### Controlled vs Uncontrolled RadioButtons
+
+RadioButton components support both controlled and uncontrolled usage patterns, giving you flexibility based on your form management approach.
+
+#### Controlled RadioButtons (Recommended)
+Use controlled components when you need to manage the radio button state in React:
+
+\`\`\`tsx
+const [selectedValue, setSelectedValue] = useState('option1');
+
+<RadioButton
+  name="choices"
+  value="option1"
+  checked={selectedValue === 'option1'}
+  onChange={(e) => setSelectedValue(e.target.value)}
+  label="Option 1"
+/>
+<RadioButton
+  name="choices"
+  value="option2"
+  checked={selectedValue === 'option2'}
+  onChange={(e) => setSelectedValue(e.target.value)}
+  label="Option 2"
+/>
+\`\`\`
+
+**Complete Example with State Management:**
+\`\`\`tsx
+function SizeSelector() {
+  const [selectedSize, setSelectedSize] = useState('medium');
+  
+  return (
+    <div>
+      <h3>Choose Size</h3>
+      <RadioButton
+        name="size"
+        value="small"
+        checked={selectedSize === 'small'}
+        onChange={(e) => setSelectedSize(e.target.value)}
+        label="Small"
+      />
+      <RadioButton
+        name="size"
+        value="medium"
+        checked={selectedSize === 'medium'}
+        onChange={(e) => setSelectedSize(e.target.value)}
+        label="Medium"
+      />
+      <RadioButton
+        name="size"
+        value="large"
+        checked={selectedSize === 'large'}
+        onChange={(e) => setSelectedSize(e.target.value)}
+        label="Large"
+      />
+      <p>Selected: {selectedSize}</p>
+    </div>
+  );
+}
+\`\`\`
+
+**Benefits of Controlled:**
+- Full control over component state
+- Easy to implement validation
+- State can be easily shared with other components
+- Predictable behavior for complex forms
+
+#### Uncontrolled RadioButtons
+Use uncontrolled components for simpler forms or when integrating with form libraries:
+
+\`\`\`tsx
+// Basic uncontrolled with defaultChecked
+<RadioButton
+  name="choices"
+  value="option1"
+  defaultChecked
+  onChange={(e) => console.log('Selected:', e.target.value)}
+  label="Option 1"
+/>
+<RadioButton
+  name="choices"
+  value="option2"
+  onChange={(e) => console.log('Selected:', e.target.value)}
+  label="Option 2"
+/>
+\`\`\`
+
+**Form Submission Example:**
+\`\`\`tsx
+function ThemeSelector() {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const theme = formData.get('theme');
+    console.log('Selected theme:', theme);
+  };
+  
+  return (
+    <form onSubmit={handleSubmit}>
+      <h3>Select Theme</h3>
+      <RadioButton
+        name="theme"
+        value="light"
+        defaultChecked
+        label="Light Theme"
+      />
+      <RadioButton
+        name="theme"
+        value="dark"
+        label="Dark Theme"
+      />
+      <RadioButton
+        name="theme"
+        value="auto"
+        label="Auto (System)"
+      />
+      <button type="submit">Save Preferences</button>
+    </form>
+  );
+}
+\`\`\`
+
+**With React Hook Form:**
+\`\`\`tsx
+import { useForm } from 'react-hook-form';
+
+function FormExample() {
+  const { register, handleSubmit, watch } = useForm();
+  
+  const onSubmit = (data) => {
+    console.log('Form data:', data);
+  };
+  
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <RadioButton
+        {...register('preference')}
+        value="option1"
+        label="Option 1"
+      />
+      <RadioButton
+        {...register('preference')}
+        value="option2"
+        label="Option 2"
+      />
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+\`\`\`
+
+**Benefits of Uncontrolled:**
+- Less boilerplate code
+- Better performance for large forms
+- Works seamlessly with form libraries
+- Closer to native HTML behavior
+
+#### Key Props for Both Patterns
+- **\`name\`** (required): Groups radio buttons together
+- **\`value\`** (required): Unique value for each option
+- **\`checked\`**: For controlled components
+- **\`defaultChecked\`**: For uncontrolled components (via ...props)
+- **\`onChange\`**: Handler for both patterns
 
 ## Design Specifications
 
@@ -119,28 +286,11 @@ When using radio buttons without visible labels (label prop omitted), you must p
 \`\`\`
 
 #### Best Practices for Label-less Radio Buttons
-- **Always provide \`aria-label\`** or \`aria-labelledby\` when omitting visible labels
+- **Always** provide \`aria-label\` or \`aria-labelledby\` when omitting visible labels
 - **Use descriptive text** that clearly explains the option's purpose
 - **Group related options** with \`fieldset\` and \`legend\` elements for context
 - **Consider visual alternatives** like icons with proper \`alt\` text or tooltips
 - **Test with screen readers** to ensure the experience is clear and intuitive
-
-#### Example: Icon-based Radio Buttons
-\`\`\`tsx
-<fieldset>
-  <legend>Select view mode</legend>
-  <RadioButton 
-    name="view" 
-    value="grid" 
-    aria-label="Grid view - Display items in a grid layout"
-  />
-  <RadioButton 
-    name="view" 
-    value="list" 
-    aria-label="List view - Display items in a vertical list"
-  />
-</fieldset>
-\`\`\`
 
 ⚠️ **Important**: Never use radio buttons without both visible labels AND accessible labels unless absolutely necessary. The combination provides the best user experience for all users.
         `,
@@ -277,7 +427,6 @@ Each example shows a different approach, from best practices to common mistakes.
           padding: '16px',
         }}
       >
-        {/* Introduction */}
         <div
           style={{
             padding: '20px',
