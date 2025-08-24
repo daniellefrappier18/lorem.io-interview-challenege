@@ -1,3 +1,7 @@
+@import 'ui/tokens/colors.css';
+@import 'ui/tokens/spacing.css';
+@import 'ui/tokens/typography.css';
+
 :root {
   font-family: 'Hanken Grotesk', sans-serif;
   line-height: 1.6;
@@ -24,4 +28,5 @@ body {
   padding: 0;
   min-width: 320px;
   min-height: 100vh;
+  background-color: var(--ui-color-gray-50);
 }

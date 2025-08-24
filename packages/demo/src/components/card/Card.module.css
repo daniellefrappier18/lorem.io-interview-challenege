@@ -1,0 +1,5 @@
+.card {
+  background: white;
+  border-radius: var(--ui-radius-2xl);
+  border: 1px solid var(--ui-color-gray-200);
+}
