@@ -30,7 +30,7 @@ lorem.io-interview-challenge/
 1. **Clone the repository**
 
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/daniellefrappier18/lorem.io-interview-challenege.git
    cd lorem.io-interview-challenge
    ```
 
