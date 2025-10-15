@@ -1,0 +1,109 @@
+.chatContainer {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.label {
+  display: block;
+  margin-bottom: 16px;
+  color: #374151;
+  font-size: 16px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.inputContainer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 200px;
+  border: 1px solid #e5e7eb;
+  border-radius: 24px;
+  padding: 16px;
+}
+
+.placeholderText {
+  color: #9ca3af;
+  font-size: 14px;
+  margin-bottom: 12px;
+  padding-top: 4px;
+}
+
+.input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 14px;
+  color: #111827;
+  padding: 0;
+  resize: none;
+  min-height: 100px;
+}
+
+.input::placeholder {
+  color: #9ca3af;
+}
+
+.bottomControls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.leftButtonGroup {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.iconButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  border-radius: 6px;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.iconButton:hover {
+  background: #e5e7eb;
+  color: #374151;
+}
+
+.iconButton svg {
+  width: 18px;
+  height: 18px;
+}
+
+.sendButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  border-radius: 6px;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sendButton:hover {
+  background: #e5e7eb;
+  color: #374151;
+}
+
+.sendButton svg {
+  width: 16px;
+  height: 16px;
+}
