@@ -1,0 +1,182 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: 'pages'
+  cancel-in-progress: false
+
+jobs:
+  # Build job
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.15.0
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm lint:all
+
+      - name: Build UI package
+        run: pnpm --filter ui build
+
+      - name: Build Storybook
+        run: |
+          cd packages/ui
+          pnpm exec storybook build --output-dir ../../dist/storybook
+
+      - name: Build demo app
+        run: |
+          cd packages/demo
+          pnpm build
+          mv dist ../../dist/demo
+
+      - name: Create index.html for deployment
+        run: |
+          mkdir -p dist
+          cat > dist/index.html << 'EOF'
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>Lorem.io Interview Challenge</title>
+              <style>
+                  body {
+                      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                      margin: 0;
+                      padding: 40px;
+                      background: #f8fafc;
+                      color: #334155;
+                  }
+                  .container {
+                      max-width: 800px;
+                      margin: 0 auto;
+                      background: white;
+                      padding: 40px;
+                      border-radius: 12px;
+                      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+                  }
+                  h1 {
+                      color: #1e293b;
+                      margin-bottom: 16px;
+                  }
+                  .links {
+                      display: grid;
+                      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                      gap: 20px;
+                      margin-top: 30px;
+                  }
+                  .link-card {
+                      padding: 24px;
+                      border: 1px solid #e2e8f0;
+                      border-radius: 8px;
+                      text-decoration: none;
+                      color: inherit;
+                      transition: all 0.2s;
+                  }
+                  .link-card:hover {
+                      border-color: #3b82f6;
+                      transform: translateY(-2px);
+                      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+                  }
+                  .link-title {
+                      font-size: 18px;
+                      font-weight: 600;
+                      color: #1e293b;
+                      margin-bottom: 8px;
+                  }
+                  .link-description {
+                      color: #64748b;
+                      line-height: 1.5;
+                  }
+              </style>
+          </head>
+          <body>
+              <div class="container">
+                  <h1>🎨 Lorem.io Interview Challenge</h1>
+                  <p>Welcome to the Lorem.io interview challenge project! This monorepo contains a React component library and a demo application.</p>
+                  
+                  <div class="links">
+                      <a href="./demo/" class="link-card">
+                          <div class="link-title">📱 Demo Application</div>
+                          <div class="link-description">
+                              Interactive demo showcasing the chat component and other UI elements in action.
+                          </div>
+                      </a>
+                      
+                      <a href="./storybook/" class="link-card">
+                          <div class="link-title">📚 Storybook</div>
+                          <div class="link-description">
+                              Component library documentation with interactive examples and design system.
+                          </div>
+                      </a>
+                  </div>
+                  
+                  <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #e2e8f0; color: #64748b;">
+                      <p><strong>Technologies:</strong> React, TypeScript, Vite, Storybook, CSS Modules, pnpm</p>
+                  </div>
+              </div>
+          </body>
+          </html>
+          EOF
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './dist'
+
+  # Deployment job
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
