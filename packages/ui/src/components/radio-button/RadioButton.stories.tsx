@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import React, { useState } from 'react';
+import React from 'react';
 import { RadioButton } from '../radio-button/RadioButton';
 import { VisuallyHidden } from '../visually-hidden/VisuallyHidden';
 

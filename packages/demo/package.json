@@ -6,8 +6,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "pnpm --filter . exec eslint 'src/**/*.{ts,tsx,js,jsx}'",
-    "lint:fix": "pnpm --filter . exec eslint 'src/**/*.{ts,tsx,js,jsx}' --fix",
+    "lint": "eslint src/",
+    "lint:fix": "eslint src/ --fix",
     "format": "pnpm --filter . exec prettier --write 'src/**/*.{ts,tsx,js,jsx,json,css,md}'"
   },
   "dependencies": {

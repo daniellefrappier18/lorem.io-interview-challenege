@@ -1,14 +1,13 @@
-import React, { forwardRef, useId } from 'react';
+import React, { forwardRef } from 'react';
 import styles from './Grid.module.css';
 
 export const Grid = forwardRef<HTMLDivElement, GridProps>(
-  ({ children, columns = 1, className = '', ...props }, ref) => {
-    const id = useId();
+  ({ children, columns = 1, className: _className = '', ...props }, ref) => {
     const childArray = React.Children.toArray(children);
 
     const actualColumns = columns === 1 ? childArray.length : columns;
 
-    const gridStyle: React.CSSProperties & { [key: string]: any } = {
+    const gridStyle: React.CSSProperties & { [key: string]: string | number } = {
       '--grid-columns': actualColumns,
       gridTemplateColumns: actualColumns === 1 ? '1fr' : `repeat(${actualColumns}, 1fr)`,
       ...props.style,
