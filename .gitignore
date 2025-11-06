@@ -20,7 +20,7 @@ build/
 **/.vite/
 
 # Storybook cache
-.storybook/
+.storybook-out/
 
 # Logs
 npm-debug.log*
