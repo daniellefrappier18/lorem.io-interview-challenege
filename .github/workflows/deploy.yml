@@ -62,7 +62,7 @@ jobs:
       - name: Build Storybook
         run: |
           cd packages/ui
-          pnpm exec storybook build --output-dir ../../dist/storybook
+          pnpm build-storybook --output-dir ../../dist/storybook
 
       - name: Build demo app
         run: |
