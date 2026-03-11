@@ -17,5 +17,8 @@ export type { LabelProps } from './components/label/Label';
 export { VisuallyHidden } from './components/visually-hidden/VisuallyHidden';
 export type { VisuallyHiddenProps } from './components/visually-hidden/VisuallyHidden';
 
+export { Chat } from './components/chat/Chat';
+export type { ChatProps } from './components/chat/Chat';
+
 // Export design tokens
 export { tokens } from './tokens';

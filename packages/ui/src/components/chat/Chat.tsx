@@ -33,7 +33,7 @@ export const Chat = forwardRef<HTMLTextAreaElement, ChatProps>(
     return (
       <div className={styles.chatContainer}>
         <Label size="sm" className={styles.label}>
-          Effortless conversations and refined insights that are engaging and refined with detail
+          Hi, Chat with Me
         </Label>
 
         <div className={styles.inputContainer}>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Header } from './components/header/Header';
 import { Grid } from './components/grid/Grid';
-import { Button, Input, Label, RadioButton, VisuallyHidden } from 'ui';
+import { Button, Chat, Input, Label, RadioButton, VisuallyHidden } from 'ui';
 import { Card } from './components/card/Card';
 import loremLogo from './assets/lorem-logo.svg';
 import './App.css';
@@ -176,6 +176,15 @@ export default function App() {
             </Card>
           </aside>
         </Grid>
+
+        <section aria-label="Chat">
+          <Card>
+            <Chat
+              placeholder="Ask me anything…"
+              onSend={(message) => console.log('Message sent:', message)}
+            />
+          </Card>
+        </section>
       </main>
     </div>
   );
