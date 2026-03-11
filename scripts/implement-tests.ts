@@ -297,7 +297,30 @@ Also check whether \`packages/ui/vitest.config.ts\` exists; if not, write one th
 - Use \`vi.fn()\` for mock callbacks
 - Write complete, runnable files — no "// TODO" placeholders
 - Import paths must be correct relative to the file being written
-- All test descriptions should reference actual prop/behavior names`;
+- All test descriptions should reference actual prop/behavior names
+
+## jest-dom matchers (REQUIRED)
+To enable matchers like \`toBeInTheDocument\`, \`toBeVisible\`, etc., you MUST do one of:
+
+**Option A — import in the test file itself (simplest):**
+\`\`\`ts
+import '@testing-library/jest-dom';
+\`\`\`
+
+**Option B — vitest.config.ts setupFiles:**
+\`\`\`ts
+// vitest.config.ts
+export default defineConfig({
+  test: {
+    setupFiles: ['./src/test-setup.ts'],
+  },
+});
+// src/test-setup.ts
+import '@testing-library/jest-dom';
+\`\`\`
+
+Without one of these, TypeScript will error: "Property 'toBeInTheDocument' does not exist on type 'Assertion<HTMLElement>'".
+Prefer Option A (import directly in the test file) unless a setupFiles is already configured.`;
 }
 
 function storiesSystemPrompt(): string {
