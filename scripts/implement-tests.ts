@@ -184,7 +184,7 @@ function e2eSystemPrompt(): string {
 
 Project setup:
 - pnpm monorepo: \`packages/ui\` (component library) and \`packages/demo\` (demo app)
-- Playwright installed at repo root for E2E tests against the demo app
+- Playwright installed at repo root for E2E tests against the demo app (baseURL: http://localhost:5173)
 
 The file lives at: ${relativePath}
 Its directory: ${componentRelDir}
@@ -192,16 +192,65 @@ Its directory: ${componentRelDir}
 Your job:
 1. Read the test recommendation report: test-suggestions/${componentName}.md
 2. Read the source file: ${relativePath}
-3. Read related files as needed for context
+3. Read related files as needed for context (CSS, child components, component library source)
 4. Write the Playwright E2E test file
 
 ## File to write
 \`e2e/${componentName}.spec.ts\`
 
 ## Code quality rules
-- Use Playwright test utilities: \`test\`, \`expect\`, \`Page\`
+- Use Playwright test utilities: \`test\`, \`expect\`, \`type Page\`
 - Write complete, runnable files — no "// TODO" placeholders
-- Test descriptions should reference actual user flows and behaviors`;
+- Test descriptions should reference actual user flows and behaviors
+- Always add \`test.use({ baseURL: 'http://localhost:5173' });\` at the top (the default playwright.config.ts points at Storybook on 6006, not the demo app)
+
+## CRITICAL: Common Playwright gotchas in this codebase
+
+### Visually hidden native inputs (radio buttons, checkboxes)
+The \`RadioButton\` component renders the native \`<input type="radio">\` with \`position: absolute; opacity: 0\`.
+\`getByLabel('Label text').check()\` will fail — the input is invisible and may be outside the viewport.
+**Always click the visible \`<label>\` wrapper instead:**
+\`\`\`ts
+// ❌ Wrong — input is hidden
+await page.getByLabel('Aperture Science').check();
+
+// ✅ Correct — click the visible label
+await page.locator('label').filter({ hasText: 'Aperture Science' }).click();
+await expect(page.getByLabel('Aperture Science')).toBeChecked(); // assertion still works
+\`\`\`
+
+### Custom placeholder divs
+Some components (e.g. \`Chat\`) render the placeholder as a \`<div>{placeholder}</div>\`, NOT as a native \`placeholder\` attribute on a textarea/input.
+\`getByPlaceholder()\` will find nothing.
+**Use \`getByText()\` instead:**
+\`\`\`ts
+// ❌ Wrong
+await expect(page.getByPlaceholder('Ask me anything…')).toBeVisible();
+
+// ✅ Correct
+await expect(page.getByText('Ask me anything…')).toBeVisible();
+\`\`\`
+Always read the component source to check whether placeholder is a native attribute or a rendered div.
+
+### Uncontrolled textarea / ref-based components
+The \`Chat\` textarea is uncontrolled — it reads and clears its value via \`ref.current.value\`.
+Playwright's \`fill()\` sets the DOM value but bypasses React's synthetic events, so \`ref.current.value\` stays empty and clear-on-send won't work.
+**Use \`page.keyboard.type()\` after clicking the element to fire real input events:**
+\`\`\`ts
+// ❌ Wrong — fill() bypasses React events, ref.current.value stays empty
+await chatTextarea.fill('Hello');
+await chatTextarea.press('Enter'); // nothing clears
+
+// ✅ Correct — keyboard.type() fires real input events
+await chatTextarea.click();
+await page.keyboard.type('Hello');
+await page.locator('[aria-label="Send message"]').click();
+await expect(chatTextarea).toHaveValue('');
+\`\`\`
+
+### Unicode vs ASCII punctuation
+Always match the exact characters used in the source. The demo app uses Unicode ellipsis \`…\` (U+2026), not three ASCII dots \`...\`.
+Check the source file before writing any string assertions.`;
 }
 
 // ─── Main orchestrator ───────────────────────────────────────────────────────
@@ -215,36 +264,41 @@ async function runImplementAgent() {
   console.log("\n" + "─".repeat(60));
 
   const tasks: Promise<void>[] = [];
+  const isDemo = relativePath.startsWith("packages/demo");
 
-  if (isRecommended(report, "Unit Tests")) {
-    tasks.push(
-      runSubagent(
-        "unit-tests",
-        unitTestSystemPrompt(),
-        `Implement unit tests for: ${relativePath}
+  // Unit tests and Storybook stories are only for packages/ui components.
+  // Demo app files are tested via E2E only.
+  if (isDemo) {
+    console.log("⏭️  Unit tests and Storybook skipped — demo app files use E2E only.");
+  } else {
+    if (isRecommended(report, "Unit Tests")) {
+      tasks.push(
+        runSubagent(
+          "unit-tests",
+          unitTestSystemPrompt(),
+          `Implement unit tests for: ${relativePath}
 
 Read the recommendation report (test-suggestions/${componentName}.md) and component source, then write the unit test file.`
-      )
-    );
-  } else {
-    console.log("⏭️  Unit tests not recommended — skipping.");
-  }
+        )
+      );
+    } else {
+      console.log("⏭️  Unit tests not recommended — skipping.");
+    }
 
-  if (isRecommended(report, "Storybook Tests")) {
-    tasks.push(
-      runSubagent(
-        "storybook",
-        storiesSystemPrompt(),
-        `Implement Storybook stories with play() functions for: ${relativePath}
+    if (isRecommended(report, "Storybook Tests")) {
+      tasks.push(
+        runSubagent(
+          "storybook",
+          storiesSystemPrompt(),
+          `Implement Storybook stories with play() functions for: ${relativePath}
 
 Read the recommendation report (test-suggestions/${componentName}.md) and component source, then write the stories file.`
-      )
-    );
-  } else {
-    console.log("⏭️  Storybook tests not recommended — skipping.");
+        )
+      );
+    } else {
+      console.log("⏭️  Storybook tests not recommended — skipping.");
+    }
   }
-
-  const isDemo = relativePath.startsWith("packages/demo");
   if (isRecommended(report, "E2E Tests") && isDemo) {
     tasks.push(
       runSubagent(

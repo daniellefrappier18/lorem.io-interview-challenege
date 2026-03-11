@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Header } from './components/header/Header';
 import { Grid } from './components/grid/Grid';
 import { Button, Chat, Input, Label, RadioButton, VisuallyHidden } from 'ui';
@@ -9,6 +9,7 @@ import './App.css';
 export default function App() {
   const [selectedRadioButtonValue, setSelectedRadioButtonValue] = useState<string | undefined>();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const chatRef = useRef<HTMLTextAreaElement>(null);
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setIsSubmitting(true);
@@ -180,6 +181,7 @@ export default function App() {
         <section aria-label="Chat">
           <Card>
             <Chat
+              ref={chatRef}
               placeholder="Ask me anything…"
               onSend={(message) => console.log('Message sent:', message)}
             />

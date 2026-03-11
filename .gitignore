@@ -48,6 +48,10 @@ Thumbs.db
 coverage/
 **/coverage/
 
+# Playwright
+playwright-report/
+test-results/
+
 # Environment variables (never commit)
 .env
 .env.local
